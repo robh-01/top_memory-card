@@ -4,7 +4,7 @@ import { useImmer } from "use-immer";
 import "./CardContainer.css";
 
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon";
-const DEFAULT_LIMIT = 30;
+const DEFAULT_LIMIT = 9;
 
 // Data Fetching
 async function fetchPokemonList(limit = DEFAULT_LIMIT) {
@@ -60,14 +60,14 @@ function shuffleArray(array) {
 }
 
 export default function CardContainer({ makeGameOver, updateScore }) {
-  const [initialPokemonList, setInitialPokemonList] = useState([]);
+  //   const [initialPokemonList, setInitialPokemonList] = useState([]);
   const [pokemonList, setPokemonList] = useImmer([]);
 
   useEffect(() => {
     // Create an async function inside useEffect
     const loadPokemon = async () => {
       const data = await initPokemonData();
-      setInitialPokemonList([...data]);
+      //   setInitialPokemonList([...data]);
       setPokemonList([...data]);
     };
 
@@ -78,7 +78,10 @@ export default function CardContainer({ makeGameOver, updateScore }) {
   function handleClick(p) {
     if (p.wasClicked) {
       makeGameOver();
-      setPokemonList([...initialPokemonList]);
+      setPokemonList(
+        pokemonList.map((pokemon) => ({ ...pokemon, wasClicked: false }))
+      );
+      //   setPokemonList([...initialPokemonList]);
     } else {
       setPokemonList((draft) => {
         for (let pokemon of draft) {
@@ -87,6 +90,7 @@ export default function CardContainer({ makeGameOver, updateScore }) {
           }
         }
       });
+      setPokemonList((draft) => shuffleArray(draft));
       updateScore();
     }
   }

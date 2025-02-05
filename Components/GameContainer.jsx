@@ -10,7 +10,11 @@ export default function GameContainer() {
   });
 
   function handleGameOver() {
-    setScore({ ...score, currentScore: 0 });
+    let newBestScore;
+    if (score.currentScore > score.bestScore) {
+      newBestScore = score.currentScore;
+    }
+    setScore({ bestScore: newBestScore || score.bestScore, currentScore: 0 });
   }
 
   function handleScoreUpdate() {
