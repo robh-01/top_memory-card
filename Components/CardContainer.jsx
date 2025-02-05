@@ -1,10 +1,10 @@
 import Card from "./Card";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import "./CardContainer.css";
 
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon";
-const DEFAULT_LIMIT = 9;
+const DEFAULT_LIMIT = 15;
 
 // Data Fetching
 async function fetchPokemonList(limit = DEFAULT_LIMIT) {
@@ -97,13 +97,6 @@ export default function CardContainer({ makeGameOver, updateScore }) {
 
   return (
     <>
-      <button
-        onClick={() => {
-          setPokemonList(shuffleArray(pokemonList));
-        }}
-      >
-        Shuffle Cards
-      </button>
       <div className="card-container">
         {pokemonList.map((p) => (
           <Card
